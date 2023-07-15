@@ -1,5 +1,6 @@
 package cn.clean.aspect;
 
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 
@@ -11,26 +12,30 @@ public class MyAspect {
 
     @Before("pointCut()")
     public void before(){
-        System.out.println("方法前");
+        System.out.println("Before");
     }
 
-    @AfterThrowing("pointCut()")
-    public void afterThrowing(){
-        System.out.println("AfterThrowing方法执行");
+    @AfterThrowing(pointcut = "pointCut()",throwing = "ex")
+    public void afterThrowing(Exception ex){
+        ex.printStackTrace();
+        System.out.println("AfterThrowing");
     }
 
-    @AfterReturning("pointCut()")
-    public void afterReturning(){
-        System.out.println("AfterReturning方法执行");
+    @AfterReturning(pointcut = "pointCut()", returning = "result")
+    public void afterReturning(Object result){
+        System.out.println("AfterReturning:"+result);
     }
 
-    // @Around("pointCut()")
-    // public void around(){
-    //     System.out.println("around方法执行");
-    // }
+     @Around("pointCut()")
+     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
+         System.out.println("Around before");
+         Object proceed = joinPoint.proceed();
+         System.out.println("Around after:" + proceed);
+         return proceed;
+     }
 
     @After("pointCut()")
     public void after(){
-        System.out.println("方法后");
+        System.out.println("After");
     }
 }

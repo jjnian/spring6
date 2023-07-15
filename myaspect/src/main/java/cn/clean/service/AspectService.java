@@ -5,7 +5,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class AspectService {
 
-    public void aspect(){
+    String name;
+
+    public String aspect(){
         System.out.println("hello aspect");
+        return "hello aspect";
     }
 }
