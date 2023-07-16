@@ -10,6 +10,5 @@ public class IOCMain {
 		AnnotationConfigApplicationContext apc = new AnnotationConfigApplicationContext(AppConfig.class);
 		TestService bean = apc.getBean(TestService.class);
 		System.out.println(bean.hello());
-
 	}
 }
