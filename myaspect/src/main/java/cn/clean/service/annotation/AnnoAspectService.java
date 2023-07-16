@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 @TargetAnnotation
 @WithAnnotation
-public class AspectServiceForMyAnno {
+public class AnnoAspectService {
 
 
     @MyAnnotation

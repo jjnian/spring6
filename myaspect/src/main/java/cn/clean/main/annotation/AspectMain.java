@@ -2,8 +2,7 @@ package cn.clean.main.annotation;
 
 import cn.clean.config.AppConfig;
 import cn.clean.service.annotation.ArgsService;
-import cn.clean.service.annotation.AspectService;
-import cn.clean.service.annotation.AspectServiceForMyAnno;
+import cn.clean.service.annotation.AnnoAspectService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class AspectMain {
@@ -15,7 +14,7 @@ public class AspectMain {
 
         // 测试自己写的注解实现Aop
         AnnotationConfigApplicationContext acp = new AnnotationConfigApplicationContext(AppConfig.class);
-        AspectServiceForMyAnno bean = acp.getBean(AspectServiceForMyAnno.class);
+        AnnoAspectService bean = acp.getBean(AnnoAspectService.class);
         bean.aspect("jiruixin");
 
         System.out.println("--------------------------");
