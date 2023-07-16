@@ -21,6 +21,5 @@ public class AspectMain {
         System.out.println("--------------------------");
         ArgsService argsService = new ArgsService();
         bean.aspect(argsService);
-
     }
 }
