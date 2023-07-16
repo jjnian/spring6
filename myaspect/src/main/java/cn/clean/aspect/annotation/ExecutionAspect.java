@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class ExecutionAspect {
-    @Pointcut("execution(* cn.clean.service.*.*(..))")
+    @Pointcut("execution(* cn.clean.service..*(..))")
     public void pointCut(){}
 
     @Before("pointCut()")

@@ -3,6 +3,7 @@ package cn.clean.aspect.annotation;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.core.PriorityOrdered;
 import org.springframework.stereotype.Component;
 
 /**
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Component;
  */
 @Aspect
 @Component
-public class WithAnnotationAspect {
+public class WithAnnotationAspect{
 	// 针对特别的包或者类
 	@Pointcut("within(cn.clean.service..*)")
 	public void withPointCut(){
