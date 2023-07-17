@@ -97,6 +97,7 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 		this();
 
 		// 注册配置类
+		// 把配置类通过beandefinied放在beanFactory中
 		register(componentClasses);
 
 		// 刷新容器
