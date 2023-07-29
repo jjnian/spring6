@@ -42,6 +42,7 @@ include "framework-platform"
 include "integration-tests"
 include 'myspring'
 include 'myaspect'
+include 'mymvc'
 
 rootProject.name = "spring"
 rootProject.children.each {project ->
