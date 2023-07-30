@@ -43,6 +43,7 @@ include "integration-tests"
 include 'myspring'
 include 'myaspect'
 include 'mymvc'
+include 'myboot'
 
 rootProject.name = "spring"
 rootProject.children.each {project ->
