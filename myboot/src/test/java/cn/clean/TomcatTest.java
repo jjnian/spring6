@@ -1,24 +1,23 @@
-package cn.clean.web.context;
-
+package cn.clean;
 
 import cn.clean.web.servlet.TomcatStarter;
 import org.apache.catalina.Host;
 import org.apache.catalina.LifecycleException;
-import org.apache.catalina.LifecycleListener;
 import org.apache.catalina.connector.Connector;
 import org.apache.catalina.core.StandardContext;
 import org.apache.catalina.startup.Tomcat;
-import org.springframework.web.context.support.GenericWebApplicationContext;
+import org.junit.jupiter.api.Test;
+import org.springframework.util.ClassUtils;
 
 import java.io.File;
-import java.util.Collections;
 
 /**
  *
  */
-public class ServletWebServerApplicationContext{
+public class TomcatTest {
 
-	public void onFresh(){
+	@Test
+	public void test() throws LifecycleException {
 		Tomcat tomcat = new Tomcat();
 
 		// 添加Web应用程序，可以指定上下文路径和WAR文件的位置
@@ -30,17 +29,12 @@ public class ServletWebServerApplicationContext{
 		//tomcat.getService().addConnector(connector);
 
 		//tomcat.setConnector(connector);
-		tomcat.getHost().setAutoDeploy(false);
+		//tomcat.getHost().setAutoDeploy(false);
 		prepareContext(tomcat.getHost());
 
-		// 启动 Tomcat
-		try {
-			tomcat.start();
-			tomcat.getServer().await();
-		} catch (LifecycleException e) {
-			throw new RuntimeException(e);
-		}
-
+		// 启动Tomcat服务器
+		tomcat.start();
+		tomcat.getServer().await();
 	}
 
 	public void prepareContext(Host host){
@@ -51,6 +45,10 @@ public class ServletWebServerApplicationContext{
 		context.setDisplayName("JI");
 		context.setPath("/ji");
 		context.setDocBase("d:/");
+
+		context.addLifecycleListener(new Tomcat.FixContextListener());
+		context.setParentClassLoader(this.getClass().getClassLoader());
+		context.setCreateUploadTargets(true);
 		host.addChild(context);
 	}
 
