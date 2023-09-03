@@ -1054,6 +1054,7 @@ public class DispatcherServlet extends FrameworkServlet {
 				multipartRequestParsed = (processedRequest != request);
 
 				// Determine handler for the current request.
+				// 获取处理请求的Handler
 				mappedHandler = getHandler(processedRequest);
 				if (mappedHandler == null) {
 					noHandlerFound(processedRequest, response);
@@ -1061,6 +1062,7 @@ public class DispatcherServlet extends FrameworkServlet {
 				}
 
 				// Determine handler adapter for the current request.
+				// 找出合适的HandlerAdapter
 				HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());
 
 				// Process last-modified header, if supported by the handler.
@@ -1073,11 +1075,16 @@ public class DispatcherServlet extends FrameworkServlet {
 					}
 				}
 
+				// 前置拦截器
 				if (!mappedHandler.applyPreHandle(processedRequest, response)) {
 					return;
 				}
 
 				// Actually invoke the handler.
+				// 通过适配器处理请求
+				// 对于ResponseBody的请求在这个方法中就已经把信心返回给前端了
+				// 验证：Debug到这个方法的下一行，你会发现浏览器已经显示出了信息，因此说明
+				// 在这个方法中已经把信息返回给前端了，但是程序依然会把下面的方法执行完毕
 				mv = ha.handle(processedRequest, response, mappedHandler.getHandler());
 
 				if (asyncManager.isConcurrentHandlingStarted()) {
@@ -1085,6 +1092,7 @@ public class DispatcherServlet extends FrameworkServlet {
 				}
 
 				applyDefaultViewName(processedRequest, mv);
+				// 后置拦截器
 				mappedHandler.applyPostHandle(processedRequest, response, mv);
 			}
 			catch (Exception ex) {
@@ -1095,6 +1103,9 @@ public class DispatcherServlet extends FrameworkServlet {
 				// making them available for @ExceptionHandler methods and other scenarios.
 				dispatchException = new ServletException("Handler dispatch failed: " + err, err);
 			}
+
+			// 返回视图：这个方法会处理视图并且返回前端
+			// 不需要视图：信息已经在上面的handle方法中返回，但是这里依然会执行。
 			processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException);
 		}
 		catch (Exception ex) {
@@ -1155,6 +1166,7 @@ public class DispatcherServlet extends FrameworkServlet {
 		}
 
 		// Did the handler return a view to render?
+		// 如果需要试图，这里的mv不是null，针对ResponseBody的会是null
 		if (mv != null && !mv.wasCleared()) {
 			render(mv, request, response);
 			if (errorView) {
@@ -1412,6 +1424,7 @@ public class DispatcherServlet extends FrameworkServlet {
 				request.setAttribute(View.RESPONSE_STATUS_ATTRIBUTE, mv.getStatus());
 				response.setStatus(mv.getStatus().value());
 			}
+			// 视图渲染
 			view.render(mv.getModelInternal(), request, response);
 		}
 		catch (Exception ex) {

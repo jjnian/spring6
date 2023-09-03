@@ -43,6 +43,7 @@ public class HandlerExecutionChain {
 
 	private final Object handler;
 
+	// SpringMVC的拦截器
 	private final List<HandlerInterceptor> interceptorList = new ArrayList<>();
 
 	private int interceptorIndex = -1;
