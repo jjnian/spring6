@@ -297,6 +297,7 @@ public abstract class AbstractMessageConverterMethodProcessor extends AbstractMe
 							genericConverter.write(body, targetType, selectedMediaType, outputMessage);
 						}
 						else {
+							// 把不需要试图的信息返回给前端，比如ResponceBody
 							((HttpMessageConverter) converter).write(body, selectedMediaType, outputMessage);
 						}
 					}
