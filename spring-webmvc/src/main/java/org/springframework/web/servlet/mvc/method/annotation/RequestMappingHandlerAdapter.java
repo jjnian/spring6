@@ -789,6 +789,7 @@ public class RequestMappingHandlerAdapter extends AbstractHandlerMethodAdapter
 			}
 			else {
 				// No HttpSession available -> no mutex necessary
+				// 执行方法并且处理方法的返回值
 				mav = invokeHandlerMethod(request, response, handlerMethod);
 			}
 		}
@@ -881,6 +882,7 @@ public class RequestMappingHandlerAdapter extends AbstractHandlerMethodAdapter
 			invocableMethod = invocableMethod.wrapConcurrentResult(result);
 		}
 
+		// 执行方法并且处理返回值
 		invocableMethod.invokeAndHandle(webRequest, mavContainer);
 		if (asyncManager.isConcurrentHandlingStarted()) {
 			return null;

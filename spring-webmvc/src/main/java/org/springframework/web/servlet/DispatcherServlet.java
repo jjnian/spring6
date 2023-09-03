@@ -1082,6 +1082,9 @@ public class DispatcherServlet extends FrameworkServlet {
 
 				// Actually invoke the handler.
 				// 通过适配器处理请求
+				// 对于ResponseBody的请求在这个方法中就已经把信心返回给前端了
+				// 验证：Debug到这个方法的下一行，你会发现浏览器已经显示出了信息，因此说明
+				// 在这个方法中已经把信息返回给前端了，但是程序依然会把下面的方法执行完毕
 				mv = ha.handle(processedRequest, response, mappedHandler.getHandler());
 
 				if (asyncManager.isConcurrentHandlingStarted()) {
@@ -1102,7 +1105,7 @@ public class DispatcherServlet extends FrameworkServlet {
 			}
 
 			// 返回视图：这个方法会处理视图并且返回前端
-			// 不需要视图，这里会执行，但是信息已经在handle方法中返回了
+			// 不需要视图：信息已经在上面的handle方法中返回，但是这里依然会执行。
 			processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException);
 		}
 		catch (Exception ex) {
