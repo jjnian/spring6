@@ -1,5 +1,6 @@
 package cn.clean.controller;
 
+import cn.clean.pojo.User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,5 +30,13 @@ public class UserController {
 		}else{
 			return "hello";
 		}
+	}
+
+	@GetMapping("/hello2")
+	public String hello2(User user){
+		System.out.println("-------------------------------");
+		System.out.println(user);
+
+		return "success";
 	}
 }
