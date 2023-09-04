@@ -82,6 +82,7 @@ public class HandlerMethod {
 
 	private final Method bridgedMethod;
 
+	// 方法的参数封装成的MethodParameter数组
 	private final MethodParameter[] parameters;
 
 	@Nullable

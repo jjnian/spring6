@@ -149,6 +149,7 @@ public class InvocableHandlerMethod extends HandlerMethod {
 		if (logger.isTraceEnabled()) {
 			logger.trace("Arguments: " + Arrays.toString(args));
 		}
+		// 利用反射执行Controller的方法
 		return doInvoke(args);
 	}
 
@@ -169,16 +170,24 @@ public class InvocableHandlerMethod extends HandlerMethod {
 		Object[] args = new Object[parameters.length];
 		for (int i = 0; i < parameters.length; i++) {
 			MethodParameter parameter = parameters[i];
+
+			// 需要利用parameterNameDiscoverer去发现方法参数的名称
+			// DefaultParameterNameDiscoverer
 			parameter.initParameterNameDiscovery(this.parameterNameDiscoverer);
+
+			// 寻找提供的参数
+			// 默认情况下providedArgs为null，所以这里获取不到
 			args[i] = findProvidedArgument(parameter, providedArgs);
 			if (args[i] != null) {
 				continue;
 			}
+
+			// 判断是否有这支持这种参数的处理器
 			if (!this.resolvers.supportsParameter(parameter)) {
 				throw new IllegalStateException(formatArgumentError(parameter, "No suitable resolver"));
 			}
 			try {
-				// 解析参数
+				// 真正利用参数解析器去解析参数
 				args[i] = this.resolvers.resolveArgument(parameter, mavContainer, request, this.dataBinderFactory);
 			}
 			catch (Exception ex) {
