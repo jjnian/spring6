@@ -13,10 +13,4 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @Configuration
 @ComponentScan("cn.clean")
 public class AppConfig {
-
-	public HttpMessageConverter<Object> mappingJackson2HttpMessageConverter(){
-		System.out.println("----------------------------------------");
-		return new MappingJackson2HttpMessageConverter();
-	}
-
 }
