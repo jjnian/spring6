@@ -45,6 +45,7 @@ import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter;
 import org.springframework.lang.Nullable;
 import org.springframework.ui.ModelMap;

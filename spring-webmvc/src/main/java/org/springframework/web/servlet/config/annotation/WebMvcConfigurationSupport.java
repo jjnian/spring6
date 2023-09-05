@@ -649,6 +649,7 @@ public class WebMvcConfigurationSupport implements ApplicationContextAware, Serv
 
 		RequestMappingHandlerAdapter adapter = createRequestMappingHandlerAdapter();
 		adapter.setContentNegotiationManager(contentNegotiationManager);
+		// 获取消息转换器
 		adapter.setMessageConverters(getMessageConverters());
 		adapter.setWebBindingInitializer(getConfigurableWebBindingInitializer(conversionService, validator));
 		adapter.setCustomArgumentResolvers(getArgumentResolvers());
@@ -834,14 +835,24 @@ public class WebMvcConfigurationSupport implements ApplicationContextAware, Serv
 	 * {@link ExceptionHandlerExceptionResolver}.
 	 * <p>This method cannot be overridden; use {@link #configureMessageConverters} instead.
 	 * Also see {@link #addDefaultHttpMessageConverters} for adding default message converters.
+	 *
+	 *  获取消息转换器
+	 *
 	 */
 	protected final List<HttpMessageConverter<?>> getMessageConverters() {
 		if (this.messageConverters == null) {
 			this.messageConverters = new ArrayList<>();
+
+			// 通过实现WebMvcConfigurationSupport的类
+			// 重写configureMessageConverters方法
+			// 通过实现WebMvcConfig实现类往messageConverters添加消息转换器
 			configureMessageConverters(this.messageConverters);
 			if (this.messageConverters.isEmpty()) {
+				// 添加一些默认的消息转换器
 				addDefaultHttpMessageConverters(this.messageConverters);
 			}
+
+			// 继续通过extendMessageConverters方法添加消息转化器
 			extendMessageConverters(this.messageConverters);
 		}
 		return this.messageConverters;

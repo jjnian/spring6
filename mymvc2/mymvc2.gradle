@@ -10,6 +10,7 @@ repositories {
 }
 
 dependencies {
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.5'
     implementation(project(":spring-webmvc"))
     implementation 'org.apache.tomcat:tomcat-catalina:11.0.0-M1'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'

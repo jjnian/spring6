@@ -33,10 +33,11 @@ public class UserController {
 	}
 
 	@GetMapping("/hello2")
-	public String hello2(User user){
+	public User hello2(User user){
 		System.out.println("-------------------------------");
 		System.out.println(user);
+		User user1 = new User("ji",18);
 
-		return "success";
+		return user1;
 	}
 }
