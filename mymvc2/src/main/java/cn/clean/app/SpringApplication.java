@@ -19,7 +19,7 @@ public class SpringApplication {
 	public static void run(){
 		AnnotationConfigWebApplicationContext awc = new AnnotationConfigWebApplicationContext();
 		awc.register(AppConfig.class);
-		awc.refresh();
+		//awc.refresh();
 
 		startTomcat(awc);
 

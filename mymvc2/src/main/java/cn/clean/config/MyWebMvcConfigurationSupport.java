@@ -7,6 +7,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,13 +16,20 @@ import java.util.List;
 @Configuration
 @EnableWebMvc
 public class MyWebMvcConfigurationSupport implements WebMvcConfigurer {
+
+	private List<HttpMessageConverter<?>> messageConverters;
+
+	@Override
 	public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
 		converters.add(new MappingJackson2HttpMessageConverter());
 	}
 
-	//@Bean
-	public HttpMessageConverter<Object> my(){
-		return new MappingJackson2HttpMessageConverter();
+	/**
+	 *  创建类的时候会把bean的参数传进来
+	 * @param converters
+	 */
+	public MyWebMvcConfigurationSupport(List<HttpMessageConverter<?>> converters) {
+		messageConverters = converters;
 	}
 
 }
