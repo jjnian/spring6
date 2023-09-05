@@ -45,7 +45,11 @@ public class DelegatingWebMvcConfiguration extends WebMvcConfigurationSupport {
 	// 里面有WebMvcConfigurer的一个数组
 	private final WebMvcConfigurerComposite configurers = new WebMvcConfigurerComposite();
 
-
+	/**
+	 * 会自动调用该方法，并把参数对应的bena传进去
+	 * @Date 2023/9/5 19:06
+	 * @param configurers
+	 */
 	@Autowired(required = false)
 	public void setConfigurers(List<WebMvcConfigurer> configurers) {
 		if (!CollectionUtils.isEmpty(configurers)) {
