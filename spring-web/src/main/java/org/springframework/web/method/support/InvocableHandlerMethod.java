@@ -168,6 +168,9 @@ public class InvocableHandlerMethod extends HandlerMethod {
 		}
 
 		Object[] args = new Object[parameters.length];
+
+		// 把所有的参数封装成MethodParameter
+		// 遍历参数方法中的所有参数
 		for (int i = 0; i < parameters.length; i++) {
 			MethodParameter parameter = parameters[i];
 
