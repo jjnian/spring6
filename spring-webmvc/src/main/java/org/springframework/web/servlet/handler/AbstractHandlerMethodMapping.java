@@ -249,6 +249,8 @@ public abstract class AbstractHandlerMethodMapping<T> extends AbstractHandlerMap
 	 * @since 5.1
 	 * @see #isHandler
 	 * @see #detectHandlerMethods
+	 *
+	 * 判断bean是不是Controller方法，是的话就处理
 	 */
 	protected void processCandidateBean(String beanName) {
 		Class<?> beanType = null;
@@ -262,6 +264,8 @@ public abstract class AbstractHandlerMethodMapping<T> extends AbstractHandlerMap
 			}
 		}
 		if (beanType != null && isHandler(beanType)) {
+
+			// 处理controller的类里面的请求方法
 			detectHandlerMethods(beanName);
 		}
 	}
@@ -270,6 +274,7 @@ public abstract class AbstractHandlerMethodMapping<T> extends AbstractHandlerMap
 	 * Look for handler methods in the specified handler bean.
 	 * @param handler either a bean name or an actual handler instance
 	 * @see #getMappingForMethod
+	 * 解析Controller的bena里面的Mappering方法，例如get请求或者post请求的方法
 	 */
 	protected void detectHandlerMethods(Object handler) {
 		Class<?> handlerType = (handler instanceof String beanName ?
@@ -742,6 +747,7 @@ public abstract class AbstractHandlerMethodMapping<T> extends AbstractHandlerMap
 
 		private final T mapping;
 
+		// 一个Controller类中方法的信息记录
 		private final HandlerMethod handlerMethod;
 
 		private final Set<String> directPaths;

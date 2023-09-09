@@ -88,6 +88,9 @@ public class RequestMappingHandlerMapping extends RequestMappingInfoHandlerMappi
 
 	private ContentNegotiationManager contentNegotiationManager = new ContentNegotiationManager();
 
+	public RequestMappingHandlerMapping(){
+		System.out.println("1111111");
+	}
 	@Nullable
 	private StringValueResolver embeddedValueResolver;
 
