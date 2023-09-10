@@ -40,7 +40,7 @@ import org.springframework.util.CollectionUtils;
 public class HandlerExecutionChain {
 
 	private static final Log logger = LogFactory.getLog(HandlerExecutionChain.class);
-
+	// HandlerMethod
 	private final Object handler;
 
 	// SpringMVC的拦截器

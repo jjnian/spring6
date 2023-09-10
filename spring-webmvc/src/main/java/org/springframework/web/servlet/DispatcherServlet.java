@@ -1075,7 +1075,7 @@ public class DispatcherServlet extends FrameworkServlet {
 					}
 				}
 
-				// 前置拦截器
+				// 前置拦截器,如果拦截器返回是false会直接结束本次请求
 				if (!mappedHandler.applyPreHandle(processedRequest, response)) {
 					return;
 				}

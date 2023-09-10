@@ -46,7 +46,7 @@ public class DelegatingWebMvcConfiguration extends WebMvcConfigurationSupport {
 	private final WebMvcConfigurerComposite configurers = new WebMvcConfigurerComposite();
 
 	/**
-	 * 会自动调用该方法，并把参数对应的bena传进去
+	 * 会自动调用该方法，并把参数对应的bean传进去
 	 * @Date 2023/9/5 19:06
 	 * @param configurers
 	 */

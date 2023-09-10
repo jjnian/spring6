@@ -410,8 +410,14 @@ public abstract class AbstractHandlerMapping extends WebApplicationObjectSupport
 	 */
 	@Override
 	protected void initApplicationContext() throws BeansException {
+
+		// 扩展拦截器， 在子类中重写该方法实现拦截器的扩展
 		extendInterceptors(this.interceptors);
+
+		// 从spring容器中获取拦截器
 		detectMappedInterceptors(this.adaptedInterceptors);
+
+		// 把interceptors里面的拦截器添加到adaptedInterceptors
 		initInterceptors();
 	}
 
@@ -518,7 +524,8 @@ public abstract class AbstractHandlerMapping extends WebApplicationObjectSupport
 		if (!ServletRequestPathUtils.hasCachedPath(request)) {
 			initLookupPath(request);
 		}
-
+		// 把HandlerMethod封装成HandlerExecutionChain
+		// 里面有HandlerMethod和处理这些请求的拦截器
 		HandlerExecutionChain executionChain = getHandlerExecutionChain(handler, request);
 
 		if (logger.isTraceEnabled()) {

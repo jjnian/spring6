@@ -67,6 +67,7 @@ public class ServletInvocableHandlerMethod extends InvocableHandlerMethod {
 
 	private static final Method CALLABLE_METHOD = ClassUtils.getMethod(Callable.class, "call");
 
+	// 里面包含了很多返回值的处理器
 	@Nullable
 	private HandlerMethodReturnValueHandlerComposite returnValueHandlers;
 

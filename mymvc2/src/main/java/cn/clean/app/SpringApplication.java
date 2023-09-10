@@ -1,15 +1,21 @@
 package cn.clean.app;
 
 import cn.clean.config.AppConfig;
+import cn.clean.controller.UserController;
 import org.apache.catalina.*;
 import org.apache.catalina.connector.Connector;
 import org.apache.catalina.core.StandardContext;
 import org.apache.catalina.core.StandardEngine;
 import org.apache.catalina.core.StandardHost;
 import org.apache.catalina.startup.Tomcat;
+import org.springframework.beans.factory.BeanFactoryUtils;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.handler.MappedInterceptor;
+
+import java.util.Map;
 
 /**
  *
@@ -20,7 +26,6 @@ public class SpringApplication {
 		AnnotationConfigWebApplicationContext awc = new AnnotationConfigWebApplicationContext();
 		awc.register(AppConfig.class);
 		//awc.refresh();
-
 		startTomcat(awc);
 
 	}
@@ -52,11 +57,11 @@ public class SpringApplication {
 		service.setContainer(engine);
 		service.addConnector(connector);
 
-		// 2.2 创建DispatcherServlet对象，并与Spring容器绑定，并将DispatcherServlet对象添加至Tomcat中
+		// 创建DispatcherServlet对象，并与Spring容器绑定，并将DispatcherServlet对象添加至Tomcat中
 		tomcat.addServlet(contextPath, "dispatcher", new DispatcherServlet(applicationContext));
 		context.addServletMappingDecoded("/*", "dispatcher");
 
-		// 2.3 启动tomcat
+		// 启动tomcat
 		try {
 			tomcat.start();
 		} catch (LifecycleException e) {
