@@ -585,6 +585,8 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
 		// Eagerly cache singletons to be able to resolve circular references
 		// even when triggered by lifecycle interfaces like BeanFactoryAware.
+		// 如果是单例，允许循环引用，并且是正在创建列表中
+		// 在创建前都会被加入到创建列表中
 		boolean earlySingletonExposure = (mbd.isSingleton() && this.allowCircularReferences &&
 				isSingletonCurrentlyInCreation(beanName));
 		if (earlySingletonExposure) {
@@ -592,6 +594,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 				logger.trace("Eagerly caching bean '" + beanName +
 						"' to allow for resolving potential circular references");
 			}
+			// 添加到三级缓存中
 			addSingletonFactory(beanName, () -> getEarlyBeanReference(beanName, mbd, bean));
 		}
 
@@ -601,6 +604,9 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 			// 填充属性
 			// 调用实例化之后的BeanPostProcessor
 			populateBean(beanName, mbd, instanceWrapper);
+
+			// Aware的回调
+			// 初始化方法的调用
 			exposedObject = initializeBean(beanName, exposedObject, mbd);
 		}
 		catch (Throwable ex) {
@@ -993,6 +999,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 			Object instance;
 			try {
 				// Mark this bean as currently in creation, even if just partially.
+				// 标记为正在创建
 				beforeSingletonCreation(beanName);
 				// Give BeanPostProcessors a chance to return a proxy instead of the target bean instance.
 				instance = resolveBeforeInstantiation(beanName, mbd);
@@ -1020,6 +1027,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 			}
 			finally {
 				// Finished partial creation of this bean.
+				// 从正在创建的集合中remove
 				afterSingletonCreation(beanName);
 			}
 
