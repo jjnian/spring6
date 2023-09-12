@@ -960,18 +960,27 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 		List<String> beanNames = new ArrayList<>(this.beanDefinitionNames);
 
 		// Trigger initialization of all non-lazy singleton beans...
+		// 实例化并且初始化所有的不是抽象的，并且是单例，不是懒加载的Bean
 		for (String beanName : beanNames) {
 			RootBeanDefinition bd = getMergedLocalBeanDefinition(beanName);
+
 			// bean不是抽象的，并且是单例，不是懒加载
 			if (!bd.isAbstract() && bd.isSingleton() && !bd.isLazyInit()) {
+
 				// 是FactoryBean
 				if (isFactoryBean(beanName)) {
-					// 首先创建&Bean
+
+					// 首先创建名字为&Bean的本身Bean
+					// 如果获取的是&开头的beanName就会返回FactoryBean，
+					// 如果是没有带&开头的beanName就会返回FactoryBean中的getObject方法的对象
 					Object bean = getBean(FACTORY_BEAN_PREFIX + beanName);
+
+					// 如果Bean实现了SmartFactoryBean并且是饥饿加载才会调用这个方法
 					if (bean instanceof SmartFactoryBean<?> smartFactoryBean && smartFactoryBean.isEagerInit()) {
 						getBean(beanName);
 					}
 				}
+
 				// 不是FactoryBean
 				else {
 					getBean(beanName);
@@ -980,6 +989,8 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 		}
 
 		// Trigger post-initialization callback for all applicable beans...
+		// 判断实例化的bean是不是SmartInitializingSingleton的子类
+		// 如果是这个子类直接调用它的afterSingletonsInstantiated方法
 		for (String beanName : beanNames) {
 			Object singletonInstance = getSingleton(beanName);
 			if (singletonInstance instanceof SmartInitializingSingleton smartSingleton) {
