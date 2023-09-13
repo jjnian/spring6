@@ -4,6 +4,7 @@ import cn.clean.config.AppConfig;
 import cn.clean.service.TestService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.expression.spel.standard.SpelExpressionParser;
 
 public class IOCMain {
 	public static void main(String[] args) {
