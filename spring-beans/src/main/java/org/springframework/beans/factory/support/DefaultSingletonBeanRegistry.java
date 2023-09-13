@@ -207,6 +207,8 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 						if (singletonObject == null) {
 							ObjectFactory<?> singletonFactory = this.singletonFactories.get(beanName);
 							if (singletonFactory != null) {
+								// 创建对象，查看对象是否需要AOP，如果需要就生成AOP代理对象
+								// 如果不需要就生成普通对象
 								singletonObject = singletonFactory.getObject();
 								this.earlySingletonObjects.put(beanName, singletonObject);
 								this.singletonFactories.remove(beanName);
